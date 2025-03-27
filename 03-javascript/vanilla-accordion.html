@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .accordion-header {
+        width: 100%;
+        padding: 15px;
+        border: 0;
+        text-align: left;
+    }
+    .accordion-content {
+        padding: 15px;
+        display: none;
+    }
+    .accordion-active {
+        display: block;
+    }
+</style>
+<body>
+<div class="container">
+    <h1>Accordion</h1>
+    <button class="accordion-header">Header 1 </button>
+    <div class="accordion-content "> Content 1 </div>
+    <button class="accordion-header">Header 2 </button>
+    <div class="accordion-content"> Content 2 </div>
+    <button class="accordion-header">Header 3 </button>
+    <div class="accordion-content"> Content 3 </div>
+</div>
+<script>
+    document.querySelectorAll('.accordion-header').forEach((button) => {
+        button.addEventListener('click', (event) => {
+            event.target.nextElementSibling.classList.toggle('accordion-active')
+        })
+    })
+</script>
+</body>
+</html>

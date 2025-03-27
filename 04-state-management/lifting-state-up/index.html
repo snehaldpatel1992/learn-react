@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  button {
+    margin: 5px;
+    padding: 5px 10px;
+  }
+</style>
+<body>
+<h1>Lifting State Up</h1>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  function CounterDisplay({ count }) {
+    return <>count is {count}</>;
+  }
+
+  function CounterButton(props) {
+    const { onClick, name } = props;
+    return <button onClick={onClick}> {name} </button>;
+  }
+
+  const useCounter = () => {
+    const [count, setCount] = React.useState(0);
+    const onIncrement = () => {
+      setCount(count + 1);
+    };
+    const onDecrement = () => setCount(count - 1);
+    return {
+      count,
+      onIncrement,
+      onDecrement,
+    };
+  };
+
+  const Counter = () => {
+    const hook = useCounter();
+    return (
+            <>
+              <CounterDisplay count={hook.count} />
+              <CounterButton onClick={hook.onIncrement} name="Increment" />
+              <CounterButton onClick={hook.onDecrement} name="Decrement" />
+            </>
+    );
+  };
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<Counter />);
+</script>
+</body>
+</html>

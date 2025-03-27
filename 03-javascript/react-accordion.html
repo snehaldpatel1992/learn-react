@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .accordion-header {
+        width: 100%;
+        padding: 15px;
+        border: 0;
+        text-align: left;
+    }
+    .accordion-content {
+        padding: 15px;
+        display: none;
+    }
+    .accordion-active {
+        display: block;
+    }
+</style>
+<body>
+<h1>React Accordion</h1>
+<!-- The root div where React will render -->
+<div id="root"></div>
+
+<!-- React CDN -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- React Component -->
+<script type="text/babel">
+    function Accordion({ items }) {
+        const [activeIndexList, setActiveIndexList] = React.useState([]);
+        const toggleIndex = (indexToFind) => {
+            let newActiveList = [...activeIndexList];
+            if (activeIndexList.includes(indexToFind)) {
+                newActiveList = newActiveList.filter(
+                    (index) => index !== indexToFind,
+                );
+            } else {
+                newActiveList.push(indexToFind);
+            }
+            setActiveIndexList(newActiveList);
+        };
+
+        return (
+            <>
+                {items.map((item, index) => {
+                    const isVisible = activeIndexList.includes(index);
+                    const classNames = `accordion-content ${isVisible ? "accordion-active" : ""}`;
+                    return (
+                        <React.Fragment key={index}>
+                            <button
+                                className="accordion-header"
+                                onClick={() => toggleIndex(index)}
+                            >
+                                {item.title}
+                            </button>
+                            <div className={classNames}> {item.content} </div>
+                        </React.Fragment>
+                    );
+                })}
+            </>
+        );
+    }
+
+    function App() {
+        const items = [
+            {
+                title: "Header 1",
+                content: <h1> Content1 </h1>,
+            },
+            {
+                title: "Header 2",
+                content: "Content 2",
+            },
+            {
+                title: "Header 3",
+                content: "Content 3",
+            },
+        ];
+
+        return (
+            <>
+                <Accordion items={items} />
+            </>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+</script>
+</body>
+</html>
